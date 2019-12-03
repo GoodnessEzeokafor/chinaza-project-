@@ -20,8 +20,8 @@ Product
 contract ProductDapp{
     uint public product_count= 0;
     uint public seller_count=0;
-    string public dapp_name = "Result Processing Dapp"; // dapp name
-    string public dapp_builder = "Goodness Ezeokafor";
+    string public dapp_name = "DShop"; // dapp name
+    string public dapp_builder = "@GoodnessEzeokafor";
     mapping(uint => Product) public products;
     mapping(uint => Seller) public sellers;
 
