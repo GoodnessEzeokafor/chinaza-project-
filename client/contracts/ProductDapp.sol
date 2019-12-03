@@ -9,7 +9,6 @@ Seller
     - name_of_business
     - email_address
     - description_of_business
-
 Product 
     - id
     - product_name
@@ -17,9 +16,6 @@ Product
     - upload_image
     - sold
     - seller
-
-
-
 */
 contract ProductDapp{
     uint public product_count= 0;
@@ -224,6 +220,7 @@ contract ProductDapp{
         Product memory p = products[_id];
         p.product_name = _product_name;
         p.product_description=_product_description;
+        p.product_price = _product_price;
         p.upload_image = _upload_image;
         p.seller = _seller;
         emit ProductUpdated(
