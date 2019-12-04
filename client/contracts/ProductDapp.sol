@@ -93,6 +93,16 @@ contract ProductDapp{
         string business_address,
         address seller_address
     );
+    // event GetSingleSeller(
+        // uint id,
+        // string first_name,
+        // string last_name,
+        // string name_of_business,
+        // string email_address,
+        // string description_of_business,
+        // string business_address,
+        // address seller_address
+    // );
     /*
     END EVENTS
     */

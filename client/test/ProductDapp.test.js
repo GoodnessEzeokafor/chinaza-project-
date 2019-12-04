@@ -97,4 +97,46 @@ contract("ProductDapp", ([deployer, seller, buyer])=> {
         assert.equal(event.business_address,"gwarandok","Business address is correct")
         assert.equal(event.seller_address, seller,"Seller address is correct")
     })
+
+    // get a singel seller profile 
+    it("get a singel seller profile", async()=> {
+        const seller_count = await this.shop.seller_count()
+        const get_single_seller_profile = await this.shop.getSingleSeller(seller_count)
+        assert.equal(get_single_seller_profile['0'].toNumber(), seller_count.toNumber())
+        assert.equal(get_single_seller_profile['1'], "John")
+        assert.equal(get_single_seller_profile['2'], "Doe")
+        assert.equal(get_single_seller_profile['3'], "John Doe Business")
+        assert.equal(get_single_seller_profile['4'], "johnDoeBusiness@gmail.com")
+        assert.equal(get_single_seller_profile['5'], "Exciting Business")
+        assert.equal(get_single_seller_profile['6'], "address")
+        assert.equal(get_single_seller_profile['7'], "0xBdb85c766ef7647AC11c7943766937b3520587BB")
+    })
+
+    // product add
+    it("add product", async()=> {
+        const added_product = await this.shop.createProduct(
+            "Bag",
+            "Nice Bag",
+            web3.utils.toWei('2','Ether'),
+            "dfnvldvfldflkmfdf8fdf",
+            {'from':seller}
+        )   
+        const product_count = await this.shop.product_count()
+        const event = added_product.logs[0].args
+        assert.equal(event.id.toNumber(),product_count.toNumber(),"product id is correct")
+        assert.equal(event.product_name,"Bag","product name is correct")
+        assert.equal(event.product_description,"Nice Bag","product description is correct")
+        assert.equal(event.product_price,"2000000000000000000","product price is correct")
+        assert.equal(event.upload_image,"dfnvldvfldflkmfdf8fdf","product image hash is correct")
+        assert.equal(event.sold,false,"product purchase is correct")
+        assert.equal(event.seller,seller,"product seller is correct")
+    })
+    // product update
+    it("update product",async() => {
+        const product_count = await this.shop.product_count()
+        const updated_product = await this.shop.updateProduct()    
+     }) 
+    // get a single product
+    // it("single product",async() => {
+    // }) 
 })
