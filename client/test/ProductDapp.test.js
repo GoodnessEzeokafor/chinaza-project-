@@ -133,10 +133,78 @@ contract("ProductDapp", ([deployer, seller, buyer])=> {
     })
     // product update
     it("update product",async() => {
+        const updated_product = await this.shop.updateProduct(
+            1,
+            "Shoe",
+            "Nice Shoe",
+            web3.utils.toWei('5','Ether'),
+            "dfnvldvfldflkmfdf8fdf",
+            buyer
+        )    
         const product_count = await this.shop.product_count()
-        const updated_product = await this.shop.updateProduct()    
+        const event = updated_product.logs[0].args
+        assert.equal(event.id.toNumber(),product_count.toNumber(),"product id is correct")
+        assert.equal(event.product_name,"Shoe","product name is correct")
+        assert.equal(event.product_description,"Nice Shoe","product description is correct")
+        assert.equal(event.product_price,"5000000000000000000","product price is correct")
+        assert.equal(event.upload_image,"dfnvldvfldflkmfdf8fdf","product image hash is correct")
+        assert.equal(event.seller,buyer,"product seller is correct")
+        
      }) 
     // get a single product
-    // it("single product",async() => {
-    // }) 
+    it("single product",async() => {
+        const product_count = await this.shop.product_count()
+        const get_single_product = await this.shop.get_single_product(product_count)
+        assert.equal(get_single_product['0'].toNumber(), product_count.toNumber())
+        assert.equal(get_single_product['1'],"Bag")
+        assert.equal(get_single_product['2'], "Nice Bag")
+        assert.equal(get_single_product['3'], "2000000000000000000")
+        assert.equal(get_single_product['4'],"dfnvldvfldflkmfdf8fdf")
+        assert.equal(get_single_product['5'], false)
+        assert.equal(get_single_product['6'], seller)
+    }) 
+
+
+    // buys product
+    it("buy and  sells products",async()=> {
+        const product_count = await this.shop.product_count()
+        // track the seler balance before purchased
+        let oldSellerBalance
+        oldSellerBalance =await web3.eth.getBalance(seller)
+        oldSellerBalance =new web3.utils.BN(oldSellerBalance)
+
+
+        // Buyer makes purchase
+        const result =await this.shop.buyProduct(
+                    product_count, 
+                    {"from":buyer, "value":web3.utils.toWei('2','Ether')}
+        )  
+
+        const event = result.logs[0].args;
+        assert.equal(event.id.toNumber(),product_count.toNumber(),'id is correct')
+        assert.equal(event.product_name.toString(),"Bag","product name is correct")  
+        assert.equal(event.product_price,"2000000000000000000" , "price correct")
+        assert.equal(event.seller, seller , "seller is corect")
+        assert.equal(event.sold, true)
+
+
+        // check the seller revieve funds
+        let newSellerBalance;
+        newSellerBalance =await web3.eth.getBalance(seller)
+        newSellerBalance =new web3.utils.BN(newSellerBalance)
+
+        let price
+        price = web3.utils.toWei('2','Ether')
+        price = new web3.utils.BN(price)
+        console.log("Seller Old Balance",oldSellerBalance)
+        console.log("Seller New Balance",newSellerBalance)
+        console.log("Price", price)
+        
+
+        const expectedBalance = oldSellerBalance.add(price)
+        assert.equal(newSellerBalance.toString(), expectedBalance.toString())
+    
+    
+
+    })
 })

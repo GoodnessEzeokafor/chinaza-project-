@@ -80,7 +80,7 @@ contract ProductDapp{
         uint product_price,
         string upload_image,
         bool sold,
-        address  sellers
+        address  seller
     );
 
     event SellerUpdated(
@@ -93,6 +93,14 @@ contract ProductDapp{
         string business_address,
         address seller_address
     );
+    event ProductPurchased(
+        uint id, // product id with a positive integer type
+        string product_name,// product name
+        uint product_price, // product price with a positive integer type
+        address payable seller, // product owner with a type of address
+        bool sold
+    );
+
     // event GetSingleSeller(
         // uint id,
         // string first_name,
@@ -298,6 +306,13 @@ contract ProductDapp{
         // pay the seller by paying them ether
         address(_seller).transfer(msg.value); 
         // trigger an event
+        emit ProductPurchased(
+            _id,
+            _product.product_name,
+            _product.product_price,
+            _product.seller,
+            true
+        );
     }
 
 }
