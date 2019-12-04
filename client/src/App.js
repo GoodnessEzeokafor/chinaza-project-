@@ -12,8 +12,8 @@ import "./dashboard_css.css"
 // COMPONENTS
 import Dashboard from './Dashboard';
 import Seller from './Seller'
+import Sellers from './Sellers'
 import AddProduct from './AddProduct'
-import ProductList from "./ProductList"
 
 
 // React Feather Icons
@@ -84,9 +84,22 @@ export default class App extends Component {
       this.setState({productDapp}) // updates the state
       // console.log("Contract:", this.state.productDapp)
       const productCount = await productDapp.methods.product_count().call() 
+      const sellerCount = await productDapp.methods.seller_count().call()
       this.setState({productCount})
+
+      const productDappName = await productDapp.methods.dapp_name().call()
+      this.setState({productDappName})
+
       // console.log("Product Count:", this.state.productCount)
 
+
+      // Load Seller
+      for(var i=1; i <= sellerCount; i++){
+        const seller = await productDapp.methods.sellers(i).call()
+        this.setState({
+          sellers:[...this.state.sellers, seller]
+        })
+      }
 
       // Load Product
       for(var i=1; i <= productCount; i++){
@@ -95,6 +108,7 @@ export default class App extends Component {
           products:[...this.state.products, product]
         })
       }
+
 
     //   this.setState({loading:false})
 
@@ -115,6 +129,7 @@ constructor(props){
     account:'',
     message:'',
     products:[],
+    sellers:[],
     loading:true
   }
 }
@@ -126,7 +141,9 @@ constructor(props){
       <div>
         {/* Nav Bar */}
         <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-          <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+          <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+            {this.state.productDappName}
+          </a>
           <input 
               className="form-control form-control-dark w-100" 
               type="text" 
@@ -168,6 +185,17 @@ constructor(props){
                           Be A Seller
                           </Link>
                       </li>
+                      <li className="nav-item">
+                          <Link className="nav-link" to="/sellers">
+                          <span className="mr-2">
+                              <UserPlus 
+                                  size='20' 
+                              />                  
+                          </span>
+                          Farmers
+                          </Link>
+                      </li>
+                      
                       {/* Add A Product Link */}
                       <li className="nav-item">
                           <Link className="nav-link" to="/product/add">
@@ -180,34 +208,37 @@ constructor(props){
                           Add A Product
                           </Link>
                       </li>
-                      <li className="nav-item">
-                          <Link className="nav-link" to="/product/list">
-                          <span className="mr-2">
-                                   
-                              <FilePlus 
-                                size='20' 
-                              />   
-                          </span>
-                            Products
-                          </Link>
-                      </li>
                       </ul>
                   </div>
                   </nav>
                   <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <Switch>
                           <Route path="/seller">
-                              <Seller />
+                              <Seller 
+                                loading={this.state.loading}
+                                productDapp={this.state.productDapp}
+                                message ={this.state.message}
+                                account={this.state.account}
+                              />
                           </Route>
-                          <Route path="/product/add">
-                              <AddProduct />
-                          </Route>
-                          <Route path="/product/list">
-                              <ProductList />
+                          <Route path="/sellers">
+                              <Sellers 
+                              sellers={this.state.sellers}
+                              productDapp={this.state.productDapp}
+                              />
                           </Route>
                           
+                          <Route path="/product/add">
+                              <AddProduct 
+                                productDapp={this.state.productDapp}
+                              />
+                          </Route>
+                    
+                          
                           <Route path="/">
-                              <Dashboard />
+                              <Dashboard 
+                              products={this.state.products}
+                              />
                           </Route>
 
 
