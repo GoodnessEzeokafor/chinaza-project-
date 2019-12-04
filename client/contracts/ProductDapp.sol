@@ -153,6 +153,16 @@ contract ProductDapp{
         s.description_of_business = _description_of_business;
         s.business_address = _business_address;
         s.seller_address = _seller_address;
+        emit SellerUpdated(
+                s.id,       
+                s.first_name,
+                s.last_name,
+                s.name_of_business,
+                s.email_address,
+                s.description_of_business,
+                s.business_address,
+                s.seller_address
+        );
     }
     //set single seller profile
     function getSingleSeller(uint _id)public view returns(
