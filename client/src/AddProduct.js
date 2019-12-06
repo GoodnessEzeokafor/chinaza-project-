@@ -72,7 +72,7 @@ export default class AddProduct extends Component {
                         this.props.productDapp.methods.createProduct(
                             this.product_name.value,
                             this.product_description.value,
-                            this.product_price.value,
+                            window.web3.utils.toWei(this.product_price.value.toString(),'Ether'),
                            file.hash
                         )
                         .send({from:this.props.account})

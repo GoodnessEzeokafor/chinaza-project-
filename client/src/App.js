@@ -240,7 +240,10 @@ constructor(props){
                           
                           <Route path="/">
                               <Dashboard 
+                              productDapp={this.state.productDapp}
                               products={this.state.products}
+                              message ={this.state.message}
+                              account={this.state.account}
                               />
                           </Route>
 

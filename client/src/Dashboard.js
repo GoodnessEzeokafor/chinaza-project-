@@ -7,6 +7,7 @@ export default class Dashboard extends Component {
 		this.state = {
             single_result:'',
             addModalShow: false,
+            loading:false
             
 		}	
   }
@@ -54,12 +55,22 @@ export default class Dashboard extends Component {
                   />
               </td>
               <td>{product.product_name}</td>
-              <td>{product.product_price} ETH</td>
+              <td>{window.web3.utils.fromWei(product.product_price.toString(),'Ether')} ETH</td>
                 <td>
   
                   <button 
                     type="button" 
-                    className="btn btn-primary btn-sm">Buy Product</button>
+                    id={product.id}
+                    value={product.product_price}
+                    className="btn btn-primary btn-sm"
+                    onClick = {(event) => {
+                      const id = event.target.id;
+                      this.props.productDapp.methods.buyProduct(id).send({from: this.props.account,value:event.target.value})
+                        .once('receipt', (receipt)=> {
+                          this.setState({ loading: false})
+                        })
+                    }}
+                    >Buy Product</button>
                 </td>
                 <td>
                 <button 
@@ -69,7 +80,6 @@ export default class Dashboard extends Component {
               </tr>
               )
             })}
-
           </tbody>
         </table>
       </div>

@@ -32,7 +32,8 @@ export default class Sellers extends Component {
               <th>Name of Business</th>
               <th>Business Address</th>
               <th>Wallet Address</th>
-              <th>Profile</th>
+              <th>View Profile</th>
+              <th>Edit Profile</th>
             </tr>
           </thead>
           <tbody>
@@ -65,9 +66,29 @@ export default class Sellers extends Component {
 							event.persist();
 						}}
 						className="btn btn-primary">
-						View Profile
+						View 
 					</button>
             </td>
+
+            <td>
+             <button id={seller.id}
+						data-target="#exampleModal"
+						// onClick={async (event) => {
+						// 	// // const id = {result.id}
+						// 	// alert(`Hello World ${result.id}`)
+						// 	// this.getSingleResult()
+						// 	const id= parseInt(event.target.id)
+						// 	console.log(typeof id)
+						// 	const single_result = await  this.getSingleFarmer(id)
+						// 	this.setState({single_result})
+						// 	this.setState({addModalShow:true})
+						// 	event.persist();
+						// }}
+						className="btn btn-success">
+						Edit 
+					</button>
+            </td>
+            
             </tr>
                 );
             })}  
@@ -79,7 +100,6 @@ export default class Sellers extends Component {
 				show={this.state.addModalShow}
 				onHide={addModalClose}
             /> 
-
       </div>
         );
     }
