@@ -94,8 +94,8 @@ export default class App extends Component {
 
 
       // Load Seller
-      for(var i=1; i <= sellerCount; i++){
-        const seller = await productDapp.methods.sellers(i).call()
+      for(var j=1; j <= sellerCount; j++){
+        const seller = await productDapp.methods.sellers(j).call()
         this.setState({
           sellers:[...this.state.sellers, seller]
         })
@@ -230,7 +230,10 @@ constructor(props){
                           
                           <Route path="/product/add">
                               <AddProduct 
-                                productDapp={this.state.productDapp}
+                                    loading={this.state.loading}
+                                    productDapp={this.state.productDapp}
+                                    message ={this.state.message}
+                                    account={this.state.account}
                               />
                           </Route>
                     

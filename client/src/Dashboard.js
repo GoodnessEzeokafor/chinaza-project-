@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import "./dashboard_css.css"
 
 export default class Dashboard extends Component {
+  constructor(props){
+		super(props)
+		this.state = {
+            single_result:'',
+            addModalShow: false,
+            
+		}	
+  }
     render() {
         return (
             <div>
@@ -30,34 +38,38 @@ export default class Dashboard extends Component {
               <th>Price</th>
               <th>Buy</th>
               <th>Edit</th>
-              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Lorem</td>
-              <td>ipsum</td>
-              <td>$100</td>
+            {this.props.products.map((product, key) => {
+              return(
+                <tr key={key}>
+            <td>{product.id}</td>
               <td>
-
+                <img 
+                  src={`https://ipfs.io/ipfs/${product.upload_image}/`}  
+                  alt={product.product_name}
+                  width="100"
+                  height="100" 
+                  />
+              </td>
+              <td>{product.product_name}</td>
+              <td>{product.product_price} ETH</td>
+                <td>
+  
+                  <button 
+                    type="button" 
+                    className="btn btn-primary btn-sm">Buy Product</button>
+                </td>
+                <td>
                 <button 
                   type="button" 
-                  className="btn btn-primary btn-sm">Buy Product</button>
-              </td>
-              <td>
-              <button 
-                type="button" 
-                className="btn btn-success btn-sm">Edit Product</button>
-              </td>
-              <td>
-              <button type="submit" className="btn btn-danger btn-sm">
-                Delete Product
-              </button>
+                  className="btn btn-success btn-sm">Edit Product</button>
+                </td>
+              </tr>
+              )
+            })}
 
-              </td>
-              
-            </tr>
           </tbody>
         </table>
       </div>

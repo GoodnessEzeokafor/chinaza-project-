@@ -4,7 +4,7 @@ import {Modal,Button} from 'react-bootstrap';
 
 import User from './user.svg';
 
-export default class DetailModal extends Component {
+export default class SellerDetailModal extends Component {
 
   // componentWillMount(){
   //   this.calculateGP()

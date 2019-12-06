@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DetailModal from './Modal';
+import SellerDetailModal from './SingleSellerProfileModal';
 
 export default class Sellers extends Component {
 
@@ -71,16 +71,10 @@ export default class Sellers extends Component {
             </tr>
                 );
             })}  
-
-            
-
-            
-
-
           </tbody>
         </table>
       </div>
-      <DetailModal 
+      <SellerDetailModal 
 				get_detail_farmer={this.state.single_result}
 				show={this.state.addModalShow}
 				onHide={addModalClose}
