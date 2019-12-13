@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "./dashboard_css.css"
+import BoughtProductModal from "./BoughtProductModal"
 
 export default class Dashboard extends Component {
   constructor(props){
@@ -12,6 +13,7 @@ export default class Dashboard extends Component {
 		}	
   }
     render() {
+      let addModalClose =() => this.setState({addModalShow:false})
         return (
             <div>
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -69,6 +71,8 @@ export default class Dashboard extends Component {
                         .once('receipt', (receipt)=> {
                           this.setState({ loading: false})
                         })
+                      this.setState({addModalShow:true})
+                      event.persist();
                     }}
                     >Buy Product</button>
                 </td>
@@ -83,6 +87,10 @@ export default class Dashboard extends Component {
           </tbody>
         </table>
       </div>
+      <BoughtProductModal 
+				show={this.state.addModalShow}
+				onHide={addModalClose}
+            /> 
             </div> 
         );
     }

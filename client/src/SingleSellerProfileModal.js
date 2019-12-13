@@ -14,6 +14,7 @@ export default class SellerDetailModal extends Component {
     }
     render() {
         return (
+          
             <Modal
                 {...this.props}
                 size="lg"
