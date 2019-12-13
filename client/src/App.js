@@ -171,7 +171,7 @@ constructor(props){
                               // color={getRandomColor()} 
                               />
                           </span>
-                          Dashboard <span className="sr-only">(current)</span>
+                          Products <span className="sr-only">(current)</span>
                           </Link>
                       </li>
                       {/* Seller Link */}

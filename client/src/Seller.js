@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import SellerCreatedModal from "./SellerCreatedModal"
 
 export default class Seller extends Component {
     constructor(props){
         super(props)
         this.state = {
-            loading:this.props.loading
+            loading:this.props.loading,
+            addModalShow: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         console.log(this.props.account)
@@ -39,10 +41,12 @@ export default class Seller extends Component {
         } catch (error){
             console.log(error)
         }
+        this.setState({addModalShow:true})
         event.preventDefault();
         event.stopPropagation();
     }
     render() {
+        let addModalClose =() => this.setState({addModalShow:false})
         return (
             <div className="mt-5">
                 <h3>
@@ -110,8 +114,12 @@ export default class Seller extends Component {
                             ref={(input) => {this.business_address = input}}
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary">Create An Account</button>
+                    <button type="submit"  className="btn btn-primary">Create An Account</button>
                     </form>
+                    <SellerCreatedModal 
+                        show={this.state.addModalShow}
+                        onHide={addModalClose}
+            /> 
             </div>
         );
     }

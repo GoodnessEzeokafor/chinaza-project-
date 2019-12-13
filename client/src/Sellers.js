@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import SellerDetailModal from './SingleSellerProfileModal';
 
 export default class Sellers extends Component {
-
 	constructor(props){
 		super(props)
 		this.state = {
@@ -10,12 +9,10 @@ export default class Sellers extends Component {
 			addModalShow: false
 		}	
     }
-    
     async getSingleFarmer(uint_id){
 		const get_single_farmer = await this.props.productDapp.methods.getSingleSeller(uint_id).call()
 		return get_single_farmer
 	}
-
 
     render() {
         let addModalClose =() => this.setState({addModalShow:false})
@@ -69,7 +66,6 @@ export default class Sellers extends Component {
 						View 
 					</button>
             </td>
-
             <td>
              <button id={seller.id}
 						data-target="#exampleModal"
