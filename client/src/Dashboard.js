@@ -38,6 +38,7 @@ export default class Dashboard extends Component {
               <th>#</th>
               <th>Product Image</th>
               <th>Product Title</th>
+              <th>Farmer Wallet Address</th>
               <th>Price</th>
               <th>Buy</th>
               <th>Edit</th>
@@ -57,9 +58,9 @@ export default class Dashboard extends Component {
                   />
               </td>
               <td>{product.product_name}</td>
+            <td>{product.seller}</td>
               <td>{window.web3.utils.fromWei(product.product_price.toString(),'Ether')} ETH</td>
                 <td>
-  
                   <button 
                     type="button" 
                     id={product.id}
